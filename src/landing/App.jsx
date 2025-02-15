@@ -1,6 +1,7 @@
 import { useState } from "react";
 import "./App.css";
 import ProductImage from "../media/ProductShowcase.webp";
+import Buttonlanding from "../components/button-landing/Button-landing";
 
 function App() {
   return (
@@ -8,11 +9,14 @@ function App() {
       <div className="waves-container">
         <div className="cta-box">
           <h1>Discover, Track and Enjoy Your Books again</h1>
-          <h2>
-            Find your next favorite read, stay organized, and share your journey
-            with others
-          </h2>
-          <button>helo</button>
+
+          <div className="bottom-header">
+            <h2>
+              Find your next favorite read, stay organized, and share your
+              journey with others
+            </h2>
+            <Buttonlanding></Buttonlanding>
+          </div>
         </div>
         <svg
           className="first-wave"
@@ -42,7 +46,7 @@ function App() {
         </svg>
 
         <div className="second-wave">
-          <img src={ProductImage} width="450px"></img>
+          <img src={ProductImage}></img>
           <h1>Features</h1>
           <svg
             height="100%"

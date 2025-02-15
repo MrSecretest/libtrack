@@ -37,6 +37,7 @@
 .second-wave img{
   position: absolute;
   top: 15px;
+  width: clamp(450px, 25vw, 750px);
   right: 0;
   z-index: 2;
   padding-right: 50px;
@@ -52,11 +53,23 @@
   margin: 0;
   text-align: center;
   width: 100%;
-  font-size: 20vw;
-  opacity: 50%;
+  font-size: clamp(2rem, 20vw, 20rem);
+
   top: 70vh;
   z-index: 4;
-  transition: all 0.2s ease-in-out;
+  animation: blink 2s ease-in-out infinite forwards;
+}
+
+@keyframes blink{
+  0%{
+    opacity: 50%;
+  }
+  50%{
+    opacity: 75%;
+  }
+  100%{
+    opacity: 50%;
+  }
 }
 
 .second-wave h1:hover{
@@ -67,4 +80,43 @@
   padding-top: 75vh;
   z-index: 3;
   position: absolute;
+}
+
+.cta-box{
+  position: absolute;
+  width: clamp(25vw, 50%, 1100px);
+  top: 33vh;
+  padding-left: clamp(50px, 5vw, 150px);
+  z-index: 5;
+  display: flex;
+  flex-direction: column;
+  justify-content: end;
+}
+
+.cta-box h1{
+  text-align: end;
+  font-size: clamp(2rem, 4vw, 6rem);
+  margin: 0;
+  background: linear-gradient(to right, #E4D9F2, #F5A3D1);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.cta-box h2 {
+  color: #E7CEEB;
+  max-width: 35ch;
+  margin: 0 0 0 auto;
+  font-size: 1.2rem;
+  font-weight: 300;
+  text-align: end;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+}
+
+.bottom-header{
+  display: flex;
+  flex-direction: column;
+  gap: 17px;
+  align-items: end;
 }
