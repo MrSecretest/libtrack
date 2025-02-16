@@ -1,7 +1,9 @@
 import { useState } from "react";
 import "./App.css";
-import ProductImage from "../media/ProductShowcase.webp";
+import ProductImage from "../media/landing/ProductShowcase.webp";
 import Buttonlanding from "../components/button-landing/Button-landing";
+import Features from "../components/features-landing/Features";
+import Pricing from "../components/pricing-landing/Pricing";
 
 function App() {
   return (
@@ -15,7 +17,7 @@ function App() {
               Find your next favorite read, stay organized, and share your
               journey with others
             </h2>
-            <Buttonlanding></Buttonlanding>
+            <Buttonlanding Text={"Sign Up"}></Buttonlanding>
           </div>
         </div>
         <svg
@@ -73,6 +75,7 @@ function App() {
               </linearGradient>
             </defs>
           </svg>
+          <Features></Features>
         </div>
         <svg
           className="third-wave"
@@ -99,6 +102,40 @@ function App() {
             </linearGradient>
           </defs>
         </svg>
+        <div className="features-box"></div>
+
+        <div className="pricing-box">
+          <svg
+            height="100%"
+            viewBox="0 0 1452 2068"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+            preserveAspectRatio="none"
+          >
+            <path
+              d="M0 294.163C36.55 272.786 142.139 195.448 219.3 165.9C296.461 136.352 381.744 133.215 462.967 116.873C544.189 100.53 617.289 57.7761 706.633 67.8457C795.978 77.9152 909.689 167.221 999.033 177.29C1088.38 187.36 1165.54 157.811 1242.7 128.263C1319.86 98.7146 1425.45 21.3772 1462 0V1659H0V294.163Z"
+              fill="url(#paint0_linear_129_201)"
+            />
+            <defs>
+              <linearGradient
+                id="paint0_linear_129_201"
+                x1="731"
+                y1="0"
+                x2="731"
+                y2="1659"
+                gradientUnits="userSpaceOnUse"
+              >
+                <stop stop-color="#61319B" />
+                <stop offset="1" stop-color="#180D26" />
+              </linearGradient>
+            </defs>
+          </svg>
+          <h1>Pricing</h1>
+          <div className="pricings-container">
+              <Pricing Text="Free"></Pricing>
+              <Pricing Text="Pro"></Pricing>
+          </div>
+        </div>
       </div>
     </div>
   );

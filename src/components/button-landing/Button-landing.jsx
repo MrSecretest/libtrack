@@ -1,11 +1,11 @@
 import "./Button-landing.css"
 
-export default function Buttonlanding(text, onPress)
+export default function Buttonlanding({Text, OnPress})
 {
     return(
         <>
             <div className="button-container">
-                <p>{"Create Account"}</p>
+                <p>{Text}</p>
             </div>
         </>
     );
