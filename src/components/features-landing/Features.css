@@ -48,7 +48,7 @@
 
 .features-grid
 {
-    top:clamp(110vh, 130vh, 150vh);
+    top:107vh;
     position: absolute;
     width: clamp(750px, 80vw, 90vw);
     display: flex;

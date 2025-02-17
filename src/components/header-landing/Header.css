@@ -1,0 +1,79 @@
+.header-container{
+    position: sticky;
+    height: 45px;
+    width: 100vw;
+    background: #11081bf1;
+    display: flex;
+    justify-content: space-between;
+    overflow: hidden;
+    padding: 0px 30px;
+    z-index: 10;
+    backdrop-filter: blur(10px);
+}
+.header-container > *{
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    user-select: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+  
+}
+
+.product-name{
+    font-weight: 600;
+}
+
+.sections
+{
+    font-size: 12px;
+    gap:65px;
+}
+
+.sign{
+    margin-right: 50px;
+    font-size: 12px;
+    display: flex;
+    gap: 10px;
+}
+
+.text-button
+{
+    color: #C9B3E5;
+    transition: all 0.1s ease-in-out;
+}
+
+.text-button:hover{
+    color: #dcd7e4;
+}
+
+.text-button:active
+{
+    color: #845eb7;
+}
+
+.fancy-button {
+    height: 28px;
+    width: 70px;
+    background: #482970;
+    border-radius: 25px;
+    border: 1px solid #e4d9f250;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #F1ECF8;
+    transition: all 0.1s ease-in-out;
+}
+
+.fancy-button:hover{
+    background: #502e7c;
+}
+
+.fancy-button:active{
+    background: #5b348d;
+}
+
