@@ -1,0 +1,21 @@
+.authBg
+{
+    position: absolute;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 15;
+}
+
+.authbox{
+    position: absolute;
+    width: 80vw;
+    height: 80vh;
+    background-color: black;
+    z-index: 15;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
