@@ -1,7 +1,7 @@
 import Buttonlanding from "../button-landing/Button-landing";
 import "./Pricings.css";
 
-export default function Pricing({ Text }) {
+export default function Pricing({ Text, Redirect }) {
   return (
     <>
       <div className="pricing-container">
@@ -36,7 +36,7 @@ export default function Pricing({ Text }) {
           )}
 
           <div className="get-started-button">
-            <Buttonlanding Text={"Get Started"}></Buttonlanding>
+            <Buttonlanding Text={"Get Started"} onClick={Redirect}></Buttonlanding>
           </div>
         </div>
       </div>

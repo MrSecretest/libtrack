@@ -1,6 +1,6 @@
 import "./Header.css";
 
-export default function Header() {
+export default function Header({Signup, AuthMode}) {
   return (
     <>
       <div className="header-container">
@@ -15,7 +15,7 @@ export default function Header() {
           <div className="text-button">
             <p>Sign In</p>
           </div>
-          <div className="fancy-button">
+          <div className="fancy-button" onClick={Signup}>
             <p>Sign Up</p>
           </div>
         </div>

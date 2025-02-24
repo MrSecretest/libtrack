@@ -1,16 +1,20 @@
 #root {
   background-color: #24123A;
   min-height: 100vh;
-  height: 300vh;
   overflow-x: hidden;
 }
 
 .everything {
   width: 100vw;
-  height: 100vh;
   display: flex;
   justify-content: center;
 }
+
+.waves-container
+{
+  overflow: hidden;
+}
+
 
 .waves-container {
   position: absolute;

@@ -1,5 +1,5 @@
 .header-container{
-    position: sticky;
+    position: fixed; /* Keeps the header fixed at the top */
     height: 45px;
     width: 100vw;
     background: #11081bf1;
@@ -25,6 +25,7 @@
 }
 
 .product-name{
+    margin-left: 40px;
     font-weight: 600;
 }
 
@@ -35,7 +36,7 @@
 }
 
 .sign{
-    margin-right: 50px;
+    margin-right: 40px;
     font-size: 12px;
     display: flex;
     gap: 10px;
@@ -45,6 +46,7 @@
 {
     color: #C9B3E5;
     transition: all 0.1s ease-in-out;
+    cursor: pointer;
 }
 
 .text-button:hover{
@@ -67,6 +69,7 @@
     justify-content: center;
     color: #F1ECF8;
     transition: all 0.1s ease-in-out;
+    cursor: pointer;
 }
 
 .fancy-button:hover{

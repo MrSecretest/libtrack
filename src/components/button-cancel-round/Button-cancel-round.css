@@ -1,0 +1,24 @@
+.cancel-round{
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #24113B;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    border-radius: 50%;
+    border: 1px solid #412564;
+    cursor: pointer;
+    z-index: 16;
+    transition: background-color 0.3s ease;
+}
+
+.cancel-round:hover {
+    background-color: #412564;
+  }
+
+.cancel-round:active{
+    background-color: #4e2f75;
+}
