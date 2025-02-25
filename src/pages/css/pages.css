@@ -1,0 +1,89 @@
+.page-wrapper{
+    width: 100vw;
+    min-height: 100vh;
+    background: linear-gradient(#0C0713, #180D26);
+    display: flex;
+    flex-direction: row;
+    overflow: clip;
+}
+
+.search-view{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+.book-search-result{
+    width: 875px;
+    height: 222px;
+    margin-block: 35px;
+    background: #180F24;
+    border-radius: 20px;
+    display: flex;
+    flex-direction: row;
+}
+
+.book-details{
+    width: 100%;
+    color: #EDE5F7;
+}
+
+.book-details h1{
+    font-weight: 400;
+    margin: 0;
+    padding: 0;
+    margin-top: 25px;
+    margin-left: 20px;
+
+}
+
+.book-headers{
+    
+    height: 80px;
+    display: flex;
+    justify-content: space-between;
+
+}
+
+.book-title-author > h1{
+    font-size: 20px;
+    height: 55px;
+    overflow-x: hidden;
+    text-overflow: ellipsis;
+}
+
+.book-details p{
+    font-size: 16px;
+    font-weight: 300;
+    margin: 0;
+    padding: 0;
+    margin-left: 20px;
+}
+
+.book-additional-container{
+    display: flex;
+    flex-direction: row;
+    width: fit-content;
+    padding-right: 20px;
+}
+.book-additional{
+    font-size: 0.4rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+
+
+.book-description{
+    padding: 0;
+    margin: 0;
+    margin-top: 15px;
+    height: 85px;
+    overflow-x: hidden;
+    text-overflow: ellipsis;
+}
+
+.dark-bg{
+    background: #0c0713d7;
+}

@@ -37,3 +37,7 @@
 .sidebar-round-button:hover{
     background: #3a2156;
 }
+
+.sidebar-round-button.selected{
+    background: #472968;
+}

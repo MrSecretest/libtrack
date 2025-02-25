@@ -21,7 +21,7 @@ function AuthForm({ Close }) {
     setError("");
     try {
       await signUp(email, password);
-      navigate("/library");
+      navigate("/home");
     } catch (err) {
       setError(err.message);
     }
@@ -32,7 +32,7 @@ function AuthForm({ Close }) {
     setError("");
     try {
       await logIn(email, password);
-      navigate("/library");
+      navigate("/home");
     } catch (err) {
       setError(err.message);
     }
@@ -53,12 +53,15 @@ function AuthForm({ Close }) {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
+        transition={{ duration: 0.2 }}
+
         className="authBg"
       >
         <motion.div
           initial={{ opacity: 0, scale: 0.5 }}
           animate={{ opacity: 1, scale: 1 }}
           exit={{ opacity: 0, scale: 0.5 }}
+          transition={{ duration: 0.2 }}
           className="authbox-container"
         >
           <ButtonCancelRound closeFunction={() => Close()}></ButtonCancelRound>
@@ -75,7 +78,6 @@ function AuthForm({ Close }) {
                   : "Log In to Continue"}
               </motion.h1>
             </AnimatePresence>
-
             <motion.p
               key={authMode}
               initial={{ opacity: 0 }}

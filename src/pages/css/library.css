@@ -1,7 +1,0 @@
-.library-page-wrapper{
-    width: 100vw;
-    min-height: 100vh;
-    background: linear-gradient(#0C0713, #180D26);
-    display: flex;
-    flex-direction: row;
-}

@@ -1,9 +1,9 @@
 import Sidebar from "../components/sidebar/Sidebar";
 
-export default function LibraryPage() {
+export default function NotesPage() {
     return (
     <div className="page-wrapper">
-      <Sidebar current={"Library"} />
+      <Sidebar current={"Notes"} />
     </div>
   );
 }
