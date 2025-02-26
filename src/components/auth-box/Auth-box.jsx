@@ -134,7 +134,7 @@ function AuthForm({ Close }) {
                     required
                   />
                 </div>
-                <button className="button-container" type="submit">
+                <button className="landing-button-container" type="submit">
                   {authMode}
                 </button>
               </form>
@@ -163,7 +163,7 @@ function AuthForm({ Close }) {
                   />
                 </div>
 
-                <button className="button-container" type="submit">
+                <button className="landing-button-container" type="submit">
                   {authMode}
                 </button>
               </form>

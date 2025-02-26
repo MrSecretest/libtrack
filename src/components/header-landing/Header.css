@@ -1,5 +1,5 @@
 .header-container{
-    position: fixed; /* Keeps the header fixed at the top */
+    position: fixed;
     height: 45px;
     width: 100vw;
     background: #11081bf1;

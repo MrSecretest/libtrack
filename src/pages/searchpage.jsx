@@ -2,10 +2,20 @@ import { useState } from "react";
 import Sidebar from "../components/sidebar/Sidebar";
 import "./css/pages.css";
 import Book from "../components/book/SingleBook";
+import { motion, AnimatePresence } from "motion/react";
+import { auth, db } from "../firebase";
+import {
+  doc,
+  setDoc,
+  getDoc,
+  collection,
+  getDocs,
+  deleteDoc,
+} from "firebase/firestore";
 
 export default function SearchPage() {
   const buttons = [
-    { label: "Add to Library", onClick: () => console.log("Added") },
+    { label: "Add to Library", onClick: () => console.log("Library") },
     { label: "View Details", onClick: () => console.log("Details") },
     { label: "Rate", onClick: () => console.log("Rated") },
     { label: "Mark as Read", onClick: () => console.log("Marked") },
@@ -41,6 +51,23 @@ export default function SearchPage() {
       setLoading(false);
     }
   };
+  const saveBookToUserLibrary = async (bookId) => {
+    const user = auth.currentUser;
+    if (!user) {
+      alert("user error");
+      Navigate("/");
+      return;
+    }
+    const userId = auth.currentUser.uid;
+    const userBookRef = doc(db, "users", userId, "library", bookId);
+
+    try {
+      await setDoc(userBookRef, { bookId });
+      alert("bookID saved");
+    } catch {
+      console.error("error(");
+    }
+  };
 
   return (
     <div className="page-wrapper">
@@ -55,45 +82,64 @@ export default function SearchPage() {
           ></input>
         </form>
 
-        {loading && <p>Loading...</p>}
-        <div className="search-results">
-          {results.map((book) => (
-            <div className="book-search-result" key={book.id}>
-              <Book
-                buttons={buttons}
-                id={book.id}
-                title={book.volumeInfo.title}
-                img={
-                  book.volumeInfo.imageLinks?.thumbnail || "default-image.jpg"
-                }
-              />
-              <div className="book-details">
-                <div className="book-headers">
-                  <div className="book-title-author">
-                    <h1>{book.volumeInfo.title}</h1>
-                    <p>{book.volumeInfo.authors?.join(", ")}</p>
-                  </div>
-                  <div className="book-additional-container">
-                    <div className="book-additional">
+        {/*loading && <p>Loading...</p>*/}
+        <AnimatePresence>
+          <div className="search-results">
+            {results.map((book) => (
+              <motion.div
+                className="book-search-result"
+                key={book.id}
+                initial={{ opacity: 0, y: -50 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: 50 }}
+                transition={{ duration: 0.2 }}
+              >
+                <Book
+                  buttons={[
+                    {
+                      label: "Add to Library",
+                      onClick: () => saveBookToUserLibrary(book.id),
+                    },
+                  ]}
+                  id={book.id}
+                  title={book.volumeInfo.title}
+                  img={
+                    book.volumeInfo.imageLinks?.thumbnail || "default-image.jpg"
+                  }
+                  lowResImg={
+                    book.volumeInfo.imageLinks?.smallThumbnail ||
+                    "default-image.jpg"
+                  }
+                />
+                <div className="book-details">
+                  <div className="book-headers">
+                    <div className="book-title-author">
+                      <h1>{book.volumeInfo.title}</h1>
+                      <p>{book.volumeInfo.authors?.join(", ")}</p>
+                    </div>
+                    <div className="book-additional-container">
+                      <div className="book-additional">
                         <h1>Language</h1>
                         <p>English</p>
-                    </div>
-                    <div className="book-additional">
-                    <h1>Language</h1>
-                    <p>English</p>
+                      </div>
+                      <div className="book-additional">
+                        <h1>Language</h1>
+                        <p>English</p>
+                      </div>
                     </div>
                   </div>
-                </div>
 
-                <div className="book-description">
-                  <p>
-                    {book.volumeInfo.description || "No description available"}
-                  </p>
+                  <div className="book-description">
+                    <p>
+                      {book.volumeInfo.description ||
+                        "No description available"}
+                    </p>
+                  </div>
                 </div>
-              </div>
-            </div>
-          ))}
-        </div>
+              </motion.div>
+            ))}
+          </div>
+        </AnimatePresence>
       </div>
     </div>
   );

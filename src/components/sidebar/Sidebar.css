@@ -4,7 +4,6 @@
     background: #291441;
     display: flex;
     justify-content: center;
-
 }
 
 .buttons-group
@@ -38,6 +37,6 @@
     background: #3a2156;
 }
 
-.sidebar-round-button.selected{
+.selected{
     background: #472968;
 }

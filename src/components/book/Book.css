@@ -4,13 +4,31 @@
     height: 222px;
     position: relative;
     border-radius: 20px;
+    overflow: hidden;
+
 }
 
 .book-cover{
-    width: 176px;
+    width: 146px;
     height: 222px;
     border-radius: 20px;
+    transition: all 0.5s ease-in-out;
+    pointer-events: none;
 }
+
+.loading{
+    filter: blur(10px);
+    pointer-events: none;
+
+}
+
+.loaded {
+    filter: blur(0);
+    opacity: 1;
+    pointer-events: none;
+
+  }
+
 .buttons-container{
     position: absolute;
     top: 0;
@@ -18,5 +36,11 @@
     display: flex;
     flex-direction: column;
     justify-content: space-evenly;
+    width: 146px;
+    display: flex;
+    align-items: center;
+}
 
+.dark-bg{
+    background: #0c0713d7;
 }
