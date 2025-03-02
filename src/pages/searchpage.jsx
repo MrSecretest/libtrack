@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Sidebar from "../components/sidebar/Sidebar";
 import "./css/pages.css";
 import Book from "../components/book/SingleBook";
@@ -12,6 +12,8 @@ import {
   getDocs,
   deleteDoc,
 } from "firebase/firestore";
+import Tag from "../components/tag/Tag";
+import { OrbitProgress } from "react-loading-indicators";
 
 export default function SearchPage() {
   const buttons = [
@@ -24,6 +26,41 @@ export default function SearchPage() {
   const [query, setQuery] = useState("");
   const [results, setResults] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [disableAnimations, setDisableAnimations] = useState(false);
+
+  useEffect(() => {
+    setDisableAnimations(isSafari());
+  }, []);
+
+  const cardVariants = disableAnimations
+    ? {}
+    : {
+        offscreen: {
+          opacity: 0.3,
+        },
+        onscreen: {
+          opacity: 1,
+          transition: {
+            duration: 0.7,
+          },
+        },
+      };
+  function salesCalculator(originalPrice, retailPrice) {
+    if (originalPrice > retailPrice) {
+      const discount = ((originalPrice - retailPrice) / originalPrice) * 100;
+      return Math.floor(discount.toFixed(2));
+    } else {
+      return null;
+    }
+  }
+
+  function isSafari() {
+    return /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
+  }
+
+  function currencyCoverter(book) {
+    return book.saleInfo.listPrice.currencyCode == "UAH" ? "₴" : "$";
+  }
 
   const searchBooks = async (e) => {
     e.preventDefault();
@@ -81,64 +118,136 @@ export default function SearchPage() {
             onChange={(e) => setQuery(e.target.value)}
           ></input>
         </form>
-
-        {/*loading && <p>Loading...</p>*/}
         <AnimatePresence>
-          <div className="search-results">
-            {results.map((book) => (
-              <motion.div
-                className="book-search-result"
-                key={book.id}
-                initial={{ opacity: 0, y: -50 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: 50 }}
-                transition={{ duration: 0.2 }}
-              >
-                <Book
-                  buttons={[
-                    {
-                      label: "Add to Library",
-                      onClick: () => saveBookToUserLibrary(book.id),
-                    },
-                  ]}
-                  id={book.id}
-                  title={book.volumeInfo.title}
-                  img={
-                    book.volumeInfo.imageLinks?.thumbnail || "default-image.jpg"
-                  }
-                  lowResImg={
-                    book.volumeInfo.imageLinks?.smallThumbnail ||
-                    "default-image.jpg"
-                  }
+          {loading ? (
+            <div className="disc-container">
+              <div className="loading-disc">
+                <OrbitProgress
+                  variant="track-disc"
+                  dense
+                  color="#8115d6"
+                  size="small"
+                  text=""
+                  textColor=""
                 />
-                <div className="book-details">
-                  <div className="book-headers">
-                    <div className="book-title-author">
-                      <h1>{book.volumeInfo.title}</h1>
-                      <p>{book.volumeInfo.authors?.join(", ")}</p>
-                    </div>
-                    <div className="book-additional-container">
-                      <div className="book-additional">
-                        <h1>Language</h1>
-                        <p>English</p>
+              </div>
+            </div>
+          ) : (
+            <motion.div
+              key={loading}
+              className="search-results"
+              initial={{ opacity: 0, y: -50 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ y: 50 }}
+              transition={{ duration: 0.2 }}
+            >
+              {results.map((book) => (
+                <motion.div
+                  className="book-search-result"
+                  key={book.id}
+                  variants={cardVariants}
+                  initial="offscreen"
+                  whileInView="onscreen"
+                  exit="offscreen"
+                  viewport={{ amount: 0.01 }}
+                >
+                  <Book
+                    buttons={[
+                      {
+                        label: "Add to Library",
+                        onClick: () => saveBookToUserLibrary(book.id),
+                      },
+                      book.saleInfo?.saleability == "FOR_SALE"
+                        ? {
+                            label: "Buy this book",
+                            onClick: () =>
+                              window.open(book.saleInfo.buyLink, "_blank"),
+                          }
+                        : {
+                            label: null,
+                            onClick: null,
+                          },
+                    ]}
+                    id={book.id}
+                    title={book.volumeInfo.title}
+                    img={
+                      book.volumeInfo.imageLinks?.thumbnail ||
+                      "default-image.jpg"
+                    }
+                    lowResImg={
+                      book.volumeInfo.imageLinks?.smallThumbnail ||
+                      "default-image.jpg"
+                    }
+                  />
+                  <div className="book-details">
+                    <div className="book-headers">
+                      <div className="book-title-author">
+                        <h1>{book.volumeInfo.title}</h1>
+                        <p>
+                          {book.volumeInfo.authors?.join(", ") || "No author"}
+                        </p>
                       </div>
-                      <div className="book-additional">
-                        <h1>Language</h1>
-                        <p>English</p>
+                      <div className="book-additional-container">
+                        <div className="book-additional">
+                          <h1>Language</h1>
+                          <p>{book.volumeInfo.language}</p>
+                        </div>
+                        <div className="book-additional">
+                          <h1>Pages</h1>
+                          <p>{book.volumeInfo.pageCount}</p>
+                        </div>
                       </div>
                     </div>
-                  </div>
 
-                  <div className="book-description">
-                    <p>
-                      {book.volumeInfo.description ||
-                        "No description available"}
-                    </p>
+                    <div className="book-description">
+                      <p>
+                        {book.volumeInfo.description ||
+                          "No description available."}
+                      </p>
+                    </div>
+                    <Tag Text={book.volumeInfo.categories}></Tag>
+                    {book.saleInfo?.saleability == "FOR_SALE" ? (
+                      <div className="book-price-container">
+                        <div className="book-price">
+                          {salesCalculator(
+                            book.saleInfo.listPrice.amount,
+                            book.saleInfo.retailPrice.amount
+                          ) > 0 ? (
+                            <div className="discount">
+                              <p>
+                                -
+                                {salesCalculator(
+                                  book.saleInfo.listPrice.amount,
+                                  book.saleInfo.retailPrice.amount
+                                )}
+                                %
+                              </p>
+                            </div> //FREE BOOKS 0 == "FREE"
+                          ) : null}
+                          {Math.floor(book.saleInfo.listPrice.amount) !=
+                            Math.floor(book.saleInfo.retailPrice.amount) && (
+                            <p
+                              style={{
+                                fontWeight: "300",
+                                textDecoration: "line-through",
+                              }}
+                            >
+                              {Math.floor(book.saleInfo.listPrice.amount)}{" "}
+                              {currencyCoverter(book)}
+                            </p>
+                          )}
+                          <p style={{ fontWeight: "500" }}>
+                            {Math.floor(book.saleInfo.retailPrice.amount)}{" "}
+                            {currencyCoverter(book)}
+                          </p>
+                        </div>
+                      </div>
+                    ) : null}
                   </div>
-                </div>
-              </motion.div>
-            ))}
-          </div>
+                </motion.div>
+              ))}
+            </motion.div>
+          )}
         </AnimatePresence>
       </div>
     </div>
