@@ -3,7 +3,9 @@ import Buttonlanding from "../button-landing/Button-landing";
 import { useState } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import BookButton from "../book-button/Book-button";
-export default function Book({ img, lowResImg, id, buttons }) {
+import BookRoundButton from "../book-round-button/BookRound";
+
+export default function Book({type, img, lowResImg, id, buttons }) {
   const [show, setShow] = useState(false);
   const [loaded, setLoaded] = useState(false);
 
@@ -36,11 +38,10 @@ export default function Book({ img, lowResImg, id, buttons }) {
           >
             {show && buttons != null
               ? buttons.map((button, index) => (
-                  <BookButton
-                    Text={button.label}
-                    key={index}
+                  <BookRoundButton
                     onClick={(e) => handleButtonClick(e, button.onClick)}
-                  ></BookButton>
+                    type= {button.btn_type}
+                  ></BookRoundButton>
                 ))
               : null}
           </motion.div>

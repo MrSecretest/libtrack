@@ -78,3 +78,21 @@
 .tag-container:active{
     scale: 1;
 }
+
+.book-round-button{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: hsl(269, 43%, 20%);
+    border-radius: 100%;
+    padding: 15px;
+    transition: all 0.1s ease-in-out;
+}
+
+.book-round-button:hover{
+    background: hsl(269, 43%, 28%);
+}
+
+.book-button-container:active{
+    background: hsl(269, 43%, 35%)
+}

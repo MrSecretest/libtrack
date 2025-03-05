@@ -2,18 +2,13 @@ import { useEffect, useState } from "react";
 import Sidebar from "../components/sidebar/Sidebar";
 import "./css/pages.css";
 import Book from "../components/book/SingleBook";
-import { motion, AnimatePresence } from "motion/react";
+import { motion, AnimatePresence, progress } from "motion/react";
 import { auth, db } from "../firebase";
-import {
-  doc,
-  setDoc,
-  getDoc,
-  collection,
-  getDocs,
-  deleteDoc,
-} from "firebase/firestore";
+import { doc, setDoc } from "firebase/firestore";
 import Tag from "../components/tag/Tag";
 import { OrbitProgress } from "react-loading-indicators";
+import { Toaster, toast } from "sonner";
+import ToasterNotification from "../components/toaster/ToasterNotif";
 
 export default function SearchPage() {
   const buttons = [
@@ -88,8 +83,10 @@ export default function SearchPage() {
       setLoading(false);
     }
   };
-  const saveBookToUserLibrary = async (bookId) => {
+
+  const saveBookToUserLibrary = async (bookId, maxProgress, book) => {
     const user = auth.currentUser;
+    const progress = 0;
     if (!user) {
       alert("user error");
       Navigate("/");
@@ -99,8 +96,17 @@ export default function SearchPage() {
     const userBookRef = doc(db, "users", userId, "library", bookId);
 
     try {
-      await setDoc(userBookRef, { bookId });
-      alert("bookID saved");
+      await setDoc(
+        userBookRef,
+        { bookId, progress, maxProgress },
+        { merge: true }
+      );
+      const stringNotif = `"${
+        book.volumeInfo.title.length > 15
+          ? book.volumeInfo.title.slice(0, 15) + "..."
+          : book.volumeInfo.title
+      }" was added to your library.`;
+      toast.success(stringNotif);
     } catch {
       console.error("error(");
     }
@@ -108,31 +114,35 @@ export default function SearchPage() {
 
   return (
     <div className="page-wrapper">
+      <ToasterNotification />
       <Sidebar current={"Search"} />
-
+      {loading ? (
+        <div className="disc-container">
+          <div className="loading-disc">
+            <OrbitProgress
+              variant="track-disc"
+              dense
+              color="#8115d6"
+              size="small"
+              text=""
+              textColor=""
+            />
+          </div>
+        </div>
+      ) : null}
       <div className="search-view">
         <form onSubmit={searchBooks}>
           <input
+            name="bookSearch"
+            placeholder="Enter name of a book"
             type="text"
             value={query}
             onChange={(e) => setQuery(e.target.value)}
+            autocomplete="on"
           ></input>
         </form>
         <AnimatePresence>
-          {loading ? (
-            <div className="disc-container">
-              <div className="loading-disc">
-                <OrbitProgress
-                  variant="track-disc"
-                  dense
-                  color="#8115d6"
-                  size="small"
-                  text=""
-                  textColor=""
-                />
-              </div>
-            </div>
-          ) : (
+          {!loading ? (
             <motion.div
               key={loading}
               className="search-results"
@@ -154,20 +164,22 @@ export default function SearchPage() {
                   <Book
                     buttons={[
                       {
-                        label: "Add to Library",
-                        onClick: () => saveBookToUserLibrary(book.id),
+                        btn_type: "add",
+                        onClick: () =>
+                          saveBookToUserLibrary(
+                            book.id,
+                            book.volumeInfo.pageCount,
+                            book
+                          ),
                       },
-                      book.saleInfo?.saleability == "FOR_SALE"
+                      book.saleInfo?.saleability === "FOR_SALE"
                         ? {
-                            label: "Buy this book",
+                            btn_type: "buy",
                             onClick: () =>
                               window.open(book.saleInfo.buyLink, "_blank"),
                           }
-                        : {
-                            label: null,
-                            onClick: null,
-                          },
-                    ]}
+                        : null, // Ensure that we don't pass a null value
+                    ].filter(Boolean)}
                     id={book.id}
                     title={book.volumeInfo.title}
                     img={
@@ -247,7 +259,7 @@ export default function SearchPage() {
                 </motion.div>
               ))}
             </motion.div>
-          )}
+          ) : null}
         </AnimatePresence>
       </div>
     </div>

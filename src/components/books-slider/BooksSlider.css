@@ -1,0 +1,58 @@
+.books-slider-conainer{
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    align-items: center;
+    width: 100vw;
+}
+
+.books-slider-container > h1{
+    font-size: 1.1rem;
+    font-weight: 350;
+    color: #BDA9D6;
+}
+
+.books-slider
+{
+    display: flex;
+    flex-direction: row;
+    justify-content: start;
+    align-items: center;
+    gap:25px;
+    flex-wrap: wrap;
+    padding-top: 15px;
+}
+
+.book-with-title{
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+
+    width: 150px;
+    text-align: center;
+    transition: all 0.3s ease; /* Smooth transition */
+
+}
+
+.book-with-title:hover{
+    height: fit-content;
+    transform: translateY(-10px);
+}
+
+.book-with-title > p {
+    font-size: 0.9rem;
+    height: 50px;
+    margin: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    width: 150px;
+    display: block;
+    text-overflow: ellipsis;
+}
+
+.book-with-title > p:hover,
+.book-with-title > p:focus {
+    overflow: auto;
+    text-overflow: initial;
+    white-space: normal;
+}

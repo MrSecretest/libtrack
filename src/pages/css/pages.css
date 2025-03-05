@@ -1,14 +1,16 @@
 .page-wrapper {
   width: 100vw;
-  min-height: 100vh;
-  background: #0c0711;
+  height: 100vh;
+  background: rgb(30, 28, 34);
   display: flex;
   flex-direction: row;
   overflow: clip;
 }
 
 .search-view {
+  
   width: 100%;
+  height: 100%;
   display: flex;
   justify-content: start;
   flex-direction: column;
@@ -21,8 +23,8 @@
 .search-view input {
   height: 30px;
   width: 300px;
-  background: #341a56;
-  border: 2px solid #432d5d;
+  background: hsl(255, 9%, 9%);
+  border: 2px solid rgb(50, 46, 55);
   border-radius: 20px;
   padding-inline: 15px;
   transition: all 0.2s ease-in-out;
@@ -30,24 +32,31 @@
 
 .search-view input:focus {
   outline: none;
-  border: 2px solid #715196;
+  border: 2px solid hsl(269, 43%, 25%);
 }
 
 .search-results {
+  background: hsl(260, 10%, 17%);
+  border-radius: 20px;
+  margin-top: 15px;
+  box-shadow: rgba(0, 0, 0, 0.674) 0px 0px 25px;
+
 }
 
 .book-search-result {
-  width: 875px;
+  width: 1000px;
   height: 222px;
   margin-block: 35px;
-  background: #191024;
+  background: hsl(268, 15%, 13%);
   border-radius: 20px;
   display: flex;
   flex-direction: row;
+  box-shadow: black 0px 0px 15px;
+  margin-inline: 25px;
 }
 
 .book-details {
-  width: 100%;
+  width: 894px;
   padding-left: 20px;
   color: #ede5f7;
 }
@@ -143,15 +152,22 @@
 }
 
 .disc-container {
-    position: absolute;
     display: flex;
     justify-content: center;
     align-items: center;
     height: 100vh;
+    width: 100%;
 }
 
 .loading-disc-absolute {
     position: absolute;
+    width: 100vw;
+    height: 100vh;
+}
+
+.loading-disc-absolute > *{
+  box-shadow: rgb(0, 0, 0) 0px 0px 25px;
+
 }
 
 .book-price-container{
@@ -193,4 +209,14 @@
 
 .book-price-container:active{
   scale: 1;
+}
+
+.library-view{
+  padding-top: 40px;
+  padding-left: 40px;
+  width: 100vw;
+  display: flex;
+  justify-content: start;
+  flex-direction: column;
+  overflow-y: auto;
 }

@@ -1,6 +1,6 @@
 .book-container {
   background: #180f24;
-  width: 176px;
+  width: 146px;
   height: 222px;
   position: relative;
   border-radius: 20px;
@@ -23,7 +23,7 @@
   height: 222px;
   transition: all 0.5s ease-in-out;
   pointer-events: none;
-  
+
 }
 
 .loading {
@@ -45,7 +45,7 @@
   display: flex;
   flex-direction: column;
   justify-content: space-evenly;
-  width: 146px;
+  width: 100%;
   display: flex;
   align-items: center;
 
@@ -53,5 +53,6 @@
 
 .dark-bg {
   background: #0c0713d7;
-  backdrop-filter: blur(2px);  
+  backdrop-filter: blur(2px); 
+ 
 }
