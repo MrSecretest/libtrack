@@ -1,33 +1,40 @@
-import { DeleteForeverRounded } from "@mui/icons-material";
+import { Add, DeleteForeverRounded, Edit, PlusOne, PlusOneRounded, Star } from "@mui/icons-material";
 import { ShoppingCart } from "@mui/icons-material";
 import { Bookmark } from "@mui/icons-material";
 import "../button-landing/Buttons.css";
-import { useEffect, useState } from "react";
 
+export default function BookRoundButton({ type, onClick, size = "medium" }) {
+  const iconMap = {
+    add: <Bookmark fontSize={size} />,
+    delete: <DeleteForeverRounded fontSize={size} />,
+    buy: <ShoppingCart fontSize={size} />,
+    plus: <Add fontSize={size}/>,
+    edit: <Edit fontSize={size}></Edit>,
+    rate: <Star fontSize={size}></Star>
+  };
+  const sizeStyleMap = {
+    smaller: {padding: "5px"},
+    small: { padding: "7px" },
+    medium: { padding: "10px" },
+    large: { padding: "15px" },
+  };
 
-const iconMap = {
-  add: <Bookmark />,
-  delete: <DeleteForeverRounded />,
-  buy: <ShoppingCart />,
-};
-
-const tooltipMap = {
+  const tooltipMap = {
     add: "Add this book to library",
     delete: "Remove this book from library",
-    buy: "Buy this book"
-};
-
-export default function BookRoundButton({ type, onClick }) {
+    buy: "Buy this book",
+  };
+  const buttonStyle = sizeStyleMap[size] || sizeStyleMap["medium"];
   return (
     <>
       {iconMap[type] ? (
         <div
+        style={buttonStyle}
           className="book-round-button"
           onClick={onClick != null ? onClick : null}
           title={tooltipMap[type]}
-
         >
-          {iconMap[type] || null}
+          {iconMap[type]}
         </div>
       ) : null}
     </>

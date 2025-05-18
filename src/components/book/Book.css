@@ -52,7 +52,5 @@
 }
 
 .dark-bg {
-  background: #0c0713d7;
-  backdrop-filter: blur(2px); 
- 
+  backdrop-filter: blur(2px); /* ✅ Valid */
 }

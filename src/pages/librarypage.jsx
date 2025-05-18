@@ -11,8 +11,6 @@ export default function LibraryPage() {
   const [books, setBooks] = useState([]);
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(false);
-  
-  
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
@@ -69,36 +67,37 @@ export default function LibraryPage() {
   return (
     <div className="page-wrapper">
       {loading ? (
-            <div className="disc-container">
-              <div className="loading-disc">
-                <OrbitProgress
-                  variant="track-disc"
-                  dense
-                  color="#8115d6"
-                  size="small"
-                  text=""
-                  textColor=""
-                />
-              </div>
-            </div>
-          ) : ( null)}
+        <div className="disc-container">
+          <div className="loading-disc">
+            <OrbitProgress
+              variant="track-disc"
+              dense
+              color="#8115d6"
+              size="small"
+              text=""
+              textColor=""
+            />
+          </div>
+        </div>
+      ) : null}
       <Sidebar current={"Library"} />
       <div className="library-view">
         <AnimatePresence>
-          
-            <motion.div
-              initial={{ opacity: 0, y: -50 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ y: 50 }}
-              transition={{ duration: 0.2 }}
-            >
-              <BooksSlider
-                booksList={books} setBooks={setBooks}
-                books={books !== 0 ? books : null}
-                expanded={true}
-                sliderName={`Your library (${books.length})`}
-              ></BooksSlider>
-            </motion.div>
+          <motion.div
+            initial={{ opacity: 0, y: -50 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ y: 50 }}
+            transition={{ duration: 0.2 }}
+          >
+            <BooksSlider
+              type={"library"}
+              booksList={books}
+              setBooks={setBooks}
+              books={books !== 0 ? books : null}
+              expanded={true}
+              sliderName={`Your library (${books.length})`}
+            ></BooksSlider>
+          </motion.div>
         </AnimatePresence>
       </div>
     </div>
