@@ -1,7 +1,7 @@
 .page-wrapper {
   width: 100vw;
   height: 100vh;
-  background: linear-gradient(180deg, hsl(260, 10%, 7%),hsl(260, 35%, 12%));
+  background: linear-gradient(180deg, hsl(260, 10%, 7%), hsl(260, 35%, 12%));
   display: flex;
   flex-direction: row;
   overflow: clip;
@@ -24,7 +24,6 @@
   pointer-events: none;
   z-index: 0;
 }
-
 
 .search-view {
   width: 100%;
@@ -58,7 +57,6 @@
   border-radius: 20px;
   margin-top: 15px;
   box-shadow: rgba(0, 0, 0, 0.674) 0px 0px 25px;
-
 }
 
 .book-search-result {
@@ -150,86 +148,80 @@
   padding-right: 20px;
 }
 
-.book-description p{
+.book-description p {
   height: 45px;
 }
 
 .discount {
-
   display: flex;
   justify-content: center;
   align-items: center;
   background: rgb(29, 42, 14);
   font-size: 0.8rem;
   border-radius: 15px;
-
 }
 
-.discount > p{
-    font-weight: 400;
+.discount > p {
+  font-weight: 400;
 }
 
 .disc-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  width: 100%;
 }
 
 .loading-disc-absolute {
-    position: absolute;
-    width: 100vw;
-    height: 100vh;
+  position: absolute;
+  width: 100vw;
+  height: 100vh;
 }
 
-.loading-disc-absolute > *{
+.loading-disc-absolute > * {
   box-shadow: rgb(0, 0, 0) 0px 0px 25px;
-
 }
 
-.book-price-container{
+.book-price-container {
   display: flex;
   flex-direction: row;
   justify-content: center;
   width: fit-content;
   scale: 1;
   transition: scale 0.1s ease-in-out;
-
 }
 
-
-.book-price{
+.book-price {
   display: flex;
   flex-direction: row;
   justify-content: center;
   width: fit-content;
-  background-color: #384D1E;
+  background-color: #384d1e;
   border-radius: 15px;
   margin-top: 10px;
   border: 1px solid #516c30;
-
 }
 
-.book-price p{
+.book-price p {
   font-size: 1rem;
   padding-inline: 7px;
   user-select: none;
-  
+
   -webkit-user-select: none; /* Safari */
   -moz-user-select: none; /* Firefox */
   -ms-user-select: none; /* IE/Edge */
 }
 
-.book-price-container:hover{
+.book-price-container:hover {
   scale: 1.05;
 }
 
-.book-price-container:active{
+.book-price-container:active {
   scale: 1;
 }
 
-.library-view{
+.library-view {
   padding-top: 40px;
   padding-left: 40px;
   width: 100vw;
@@ -247,4 +239,87 @@
   transform: translate(-50%, -50%);
   text-align: center;
   padding: 1rem;
+}
+
+@media (max-width: 768px) {
+  .search-results {
+    justify-content: center;
+    padding-inline: 10px;
+  }
+  .book-search-result {
+    width: 80vw;
+    flex-direction: column;
+  }
+
+  .book-details {
+    width: 100%;
+    padding: 0;
+    padding-left: 10px;
+  }
+
+  .book-title-author {
+    width: 100%;
+  }
+
+  .book-description p {
+    width: 315px;
+  }
+  .search-view input {
+    width: 50vw;
+  }
+
+  .book-search-result {
+    margin-inline: 0px;
+    padding: 0px;
+    height: 350px;
+    align-items: center;
+  }
+
+  .book-details h1,
+  .book-additional h1 {
+    font-size: 0.6rem;
+  }
+  .book-additional-container {
+    flex-direction: row;
+    justify-content: start;
+    gap: 10px;
+    padding-right: 0;
+    margin-top: 0px;
+  }
+
+  .book-additional a,
+  .book-additional p {
+    font-size: 0.75rem;
+  }
+
+  .book-price p {
+    font-size: 0.9rem;
+  }
+
+  .discount > p {
+    font-size: 0.75rem;
+  }
+
+  .book-description {
+    padding-right: 0;
+    width: 100%;
+  }
+
+  .book-description p {
+    font-size: 0.8rem;
+  }
+  .book-title-author {
+    width: 290px;
+  }
+
+  .book-title-author {
+    font-size: 0.8rem;
+    overflow-x: hidden;
+    text-overflow: ellipsis;
+    max-height: 64px;
+    width: auto;
+  }
+  .book-headers {
+    margin-right: 35px;
+  }
 }

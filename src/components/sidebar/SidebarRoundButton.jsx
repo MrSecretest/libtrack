@@ -12,7 +12,7 @@ export default function SidebarRoundButton({image, redirect, active})
     return(
         <>
             <div onClick={handleRedirect} className={`sidebar-round-button  ${active ? `selected` : ``}`}>
-                <img src={image} width={"18px"} color="white"></img>
+                <img src={image} width={"16px"} color="white"></img>
             </div>
         </>
     );

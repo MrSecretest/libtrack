@@ -148,8 +148,8 @@ export default function SearchPage() {
         </form>
         {!loading && searchInitiated && results.length === 0 && (
           <motion.div
-            initial={{ opacity: "0%"}}
-            animate={{ opacity: "100%"}}
+            initial={{ opacity: "0%" }}
+            animate={{ opacity: "100%" }}
             className="no-results-message"
           >
             <div>
@@ -166,8 +166,8 @@ export default function SearchPage() {
 
         {!loading && !searchInitiated && (
           <motion.div
-            initial={{ opacity: "0%"}}
-            animate={{ opacity: "100%"}}
+            initial={{ opacity: "0%" }}
+            animate={{ opacity: "100%" }}
             className="empty-state-message"
           >
             <SearchIcon sx={{ fontSize: 128, color: "#3a364a" }} />
@@ -267,7 +267,7 @@ export default function SearchPage() {
                                 )}
                                 %
                               </p>
-                            </div> //FREE BOOKS 0 == "FREE"
+                            </div>
                           ) : null}
                           {Math.floor(book.saleInfo.listPrice.amount) !=
                             Math.floor(book.saleInfo.retailPrice.amount) && (

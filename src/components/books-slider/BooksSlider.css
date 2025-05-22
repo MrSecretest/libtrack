@@ -37,6 +37,14 @@
   transform: translateY(-10px);
 }
 
+.centered-book
+{
+  display:flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
 .book-with-title > p {
   font-size: 0.9rem;
   height: 50px;
@@ -56,6 +64,9 @@
 }
 
 @media (max-width: 768px) {
+  .book-with-title > p {
+  font-size: 0.7rem;
+  }
   .book-with-title {
     display: flex;
     flex-direction: column;
@@ -118,7 +129,7 @@
   flex-grow: 1;
   display: flex;
   align-items: center;
-  min-width: 100px;
+  min-width: 90px;
   justify-content: center;
   gap: 5px;
 }
@@ -213,4 +224,17 @@
 
 .my-swal-cancel:hover {
   background-color: hsl(346, 46%, 20%);
+}
+
+.star{
+  font-size: small;
+}
+.star-big{
+}
+
+@media(max-width:768px)
+{
+  .star{
+    font-size: x-small;
+  }
 }

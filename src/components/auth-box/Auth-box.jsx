@@ -21,7 +21,7 @@ function AuthForm({ Close }) {
     setError("");
     try {
       await signUp(email, password);
-      navigate("/home");
+      navigate("/search");
     } catch (err) {
       setError(err.message);
     }
@@ -32,7 +32,7 @@ function AuthForm({ Close }) {
     setError("");
     try {
       await logIn(email, password);
-      navigate("/home");
+      navigate("/search");
     } catch (err) {
       setError(err.message);
     }

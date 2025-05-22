@@ -291,7 +291,7 @@ export default function BooksSlider({
         ${[1, 2, 3, 4, 5]
           .map(
             (i) =>
-              `<span class="star" data-value="${i}" style="transition: color 0.2s ease-in-out; cursor: pointer;">&#9733;</span>`
+              `<span class="star" data-value="${i}" style="transition: color 0.2s ease-in-out; cursor: pointer; font-size: larger">&#9733;</span>`
           )
           .join("")}
       </div>
@@ -601,7 +601,7 @@ export default function BooksSlider({
             const buttons = typeMap[type];
 
             return (
-              <div>
+              <div className="centered-book">
                 <div key={book.id} className="book-with-title">
                   <Book
                     key={book.id}

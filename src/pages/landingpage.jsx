@@ -5,7 +5,6 @@ import Buttonlanding from "../components/button-landing/Button-landing";
 import Features from "../components/features-landing/Features";
 import Pricing from "../components/pricing-landing/Pricing";
 import Header from "../components/header-landing/Header";
-import UserAuthContextProvider from "../auth/UserAuthContext.jsx";
 import AuthBox from "../components/auth-box/Auth-box.jsx";
 import { AnimatePresence } from "motion/react";
 
