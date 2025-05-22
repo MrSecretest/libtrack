@@ -23,8 +23,6 @@ export default function Book({img, lowResImg, buttons }) {
             src={loaded ? img : lowResImg}
             className={`book-cover ${loaded ? "loaded" : "loading"}`}
             onLoad={() => setLoaded(true)}
-            width="137px"
-            height="209px"
           />
           <motion.div
             className={`buttons-container ${show ? `dark-bg` : ``}`}

@@ -9,7 +9,6 @@
   overflow: hidden;
 }
 
-
 .book-container:hover {
   scale: 1;
 }
@@ -18,12 +17,22 @@
   scale: 0.98;
 }
 
+@media (max-width: 768px) {
+  .book-container {
+    width: 90px;
+    height: 150px;
+  }
+  .book-cover {
+    width: 90px;
+    height: 150px;
+  }
+}
+
 .book-cover {
   width: 146px;
   height: 222px;
   transition: all 0.5s ease-in-out;
   pointer-events: none;
-
 }
 
 .loading {
@@ -35,7 +44,6 @@
   filter: blur(0);
   opacity: 1;
   pointer-events: none;
-
 }
 
 .buttons-container {
@@ -48,7 +56,6 @@
   width: 100%;
   display: flex;
   align-items: center;
-
 }
 
 .dark-bg {

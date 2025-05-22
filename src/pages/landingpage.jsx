@@ -30,8 +30,7 @@ function LandingPage() {
       <div className="everything">
         <div className="waves-container">
           <div className="cta-box">
-            <h1>Discover, Track and Enjoy Your Books again</h1>
-
+            <h1 className="cta-h1">Discover, Track and Enjoy Your Books again</h1>
             <div className="bottom-header">
               <h2>
                 Find your next favorite read, stay organized, and share your
@@ -71,7 +70,7 @@ function LandingPage() {
           </svg>
 
           <div className="second-wave">
-            <img src={ProductImage}></img>
+            <img className="product-image" src={ProductImage}></img>
             <h1>Features</h1>
             <svg
               height="100%"

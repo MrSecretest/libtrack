@@ -55,6 +55,19 @@
   white-space: normal;
 }
 
+@media (max-width: 768px) {
+  .book-with-title {
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    align-items: center;
+    width: 90px;
+  }
+  .books-slider{
+    gap:15px;
+  }
+}
+
 .progress {
   display: flex;
   height: 7px;

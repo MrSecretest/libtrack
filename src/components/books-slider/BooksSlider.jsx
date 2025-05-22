@@ -527,7 +527,7 @@ export default function BooksSlider({
 
   const cutSize = () => {
     const windowWidth = window.innerWidth;
-    const useableWidth = 0.9 * windowWidth;
+    const useableWidth = 0.95 * windowWidth;
     const numberOfBooks = Math.floor(useableWidth / 170);
     return numberOfBooks;
   };
