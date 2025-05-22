@@ -1,11 +1,9 @@
 import "./Book.css";
-import Buttonlanding from "../button-landing/Button-landing";
 import { useState } from "react";
 import { motion, AnimatePresence } from "motion/react";
-import BookButton from "../book-button/Book-button";
 import BookRoundButton from "../book-round-button/BookRound";
 
-export default function Book({type, img, lowResImg, id, buttons }) {
+export default function Book({img, lowResImg, buttons }) {
   const [show, setShow] = useState(false);
   const [loaded, setLoaded] = useState(false);
 

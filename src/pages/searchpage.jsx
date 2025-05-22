@@ -7,8 +7,10 @@ import { auth, db } from "../firebase";
 import { doc, setDoc } from "firebase/firestore";
 import Tag from "../components/tag/Tag";
 import { OrbitProgress } from "react-loading-indicators";
-import { Toaster, toast } from "sonner";
+import { toast } from "sonner";
 import ToasterNotification from "../components/toaster/ToasterNotif";
+import SearchIcon from "@mui/icons-material/Search";
+import SentimentVeryDissatisfiedIcon from "@mui/icons-material/SentimentVeryDissatisfied";
 
 export default function SearchPage() {
   const buttons = [
@@ -22,6 +24,7 @@ export default function SearchPage() {
   const [results, setResults] = useState([]);
   const [loading, setLoading] = useState(false);
   const [disableAnimations, setDisableAnimations] = useState(false);
+  const [searchInitiated, setSearchInitiated] = useState(false);
 
   useEffect(() => {
     setDisableAnimations(isSafari());
@@ -59,6 +62,8 @@ export default function SearchPage() {
 
   const searchBooks = async (e) => {
     e.preventDefault();
+    setLoading(true);
+    setSearchInitiated(true); // Mark search as started
     setLoading(true);
 
     try {
@@ -141,6 +146,34 @@ export default function SearchPage() {
             autocomplete="on"
           ></input>
         </form>
+        {!loading && searchInitiated && results.length === 0 && (
+          <motion.div
+            initial={{ opacity: "0%"}}
+            animate={{ opacity: "100%"}}
+            className="no-results-message"
+          >
+            <div>
+              <SentimentVeryDissatisfiedIcon
+                sx={{
+                  fontSize: 128,
+                  color: "#3a364a",
+                }}
+              />
+            </div>
+            <p>No results found!</p>
+          </motion.div>
+        )}
+
+        {!loading && !searchInitiated && (
+          <motion.div
+            initial={{ opacity: "0%"}}
+            animate={{ opacity: "100%"}}
+            className="empty-state-message"
+          >
+            <SearchIcon sx={{ fontSize: 128, color: "#3a364a" }} />
+            <p>Please enter a search query to begin</p>
+          </motion.div>
+        )}
         <AnimatePresence>
           {!loading ? (
             <motion.div
@@ -178,7 +211,7 @@ export default function SearchPage() {
                             onClick: () =>
                               window.open(book.saleInfo.buyLink, "_blank"),
                           }
-                        : null, // Ensure that we don't pass a null value
+                        : null,
                     ].filter(Boolean)}
                     id={book.id}
                     title={book.volumeInfo.title}

@@ -96,7 +96,7 @@ export default function ProgressPage() {
                 booksList={books} setBooks={setBooks}
                 books={books !== 0 ? books : null}
                 expanded={true}
-                sliderName={`Your library (${books.length})`}
+                sliderName={`Progress library (${books.length})`}
               ></BooksSlider>
             </motion.div>
         </AnimatePresence>

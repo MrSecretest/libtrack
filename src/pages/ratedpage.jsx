@@ -95,7 +95,7 @@ export default function LibraryPage() {
                 booksList={books} setBooks={setBooks}
                 books={books !== 0 ? books : null}
                 expanded={true}
-                sliderName={`Your library (${books.length})`}
+                sliderName={`Rated books (${books.length})`}
               ></BooksSlider>
             </motion.div>
         </AnimatePresence>

@@ -2,7 +2,7 @@ import "./BooksSlider.css";
 import Book from "../book/SingleBook";
 import Buttonlanding from "../button-landing/Button-landing";
 import { useEffect, useState } from "react";
-import { auth, db } from "../../firebase";
+import { auth, db, addDoc } from "../../firebase";
 import {
   collection,
   getDocs,
@@ -13,10 +13,8 @@ import {
 } from "firebase/firestore";
 import ToasterNotification from "../toaster/ToasterNotif";
 import { toast } from "sonner";
-import BookRoundButton from "../book-round-button/BookRound";
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
-import { progress } from "motion";
 import AdditionalBar from "../additional-bar/AdditionalBar";
 
 export default function BooksSlider({
@@ -31,18 +29,19 @@ export default function BooksSlider({
   const [bookProgressMap, setBookProgressMap] = useState({});
   const MySwal = withReactContent(Swal);
   const [bookMetaMap, setBookMetaMap] = useState({});
+
+  const fetchAllBookMeta = async () => {
+    const meta = {};
+
+    for (const book of displayedBooks) {
+      const { rating, comment } = await getRating(book);
+      meta[book.id] = { rating, comment };
+    }
+
+    setBookMetaMap(meta);
+  };
+
   useEffect(() => {
-    const fetchAllBookMeta = async () => {
-      const meta = {};
-
-      for (const book of displayedBooks) {
-        const { rating, comment } = await getRating(book);
-        meta[book.id] = { rating, comment };
-      }
-
-      setBookMetaMap(meta);
-    };
-
     fetchAllBookMeta();
   }, [displayedBooks]);
 
@@ -85,6 +84,16 @@ export default function BooksSlider({
       },
     ];
   };
+
+  const notesButtons = (book) => {
+    return [
+      {
+        btn_type: "editNotes",
+        onClick: () => addNote(book),
+      },
+    ];
+  };
+
   const deleteBookFromUser = async (book) => {
     const user = auth.currentUser;
     const userId = user.uid;
@@ -104,6 +113,154 @@ export default function BooksSlider({
       toast.success(stringNotif);
       updateDisplayedBooks();
     }
+  };
+
+  const showNotes = async (book) => {
+    try {
+      const user = auth.currentUser;
+      const userId = user.uid;
+
+      const notesRef = collection(
+        db,
+        "users",
+        userId,
+        "library",
+        book.id,
+        "notes"
+      );
+      const querySnapshot = await getDocs(notesRef);
+      const notes = [];
+
+      querySnapshot.forEach((doc) => {
+        const data = doc.data();
+        notes.push({
+          id: doc.id,
+          page: data.page || 0,
+          note: data.note || "",
+        });
+      });
+
+      const notesHtml =
+        notes.length > 0
+          ? notes
+              .map(
+                (note, index) => `
+                <div style="
+        margin-bottom: 0.75rem;
+        padding: 0.75rem;
+        background-color: #211c26; /* lighter dark gray */
+        border-radius: 0.5rem;
+        color: #fff;
+      ">
+            <strong>Note ${index + 1}:</strong><br/>
+            <em>Page:</em> ${note.page}<br/>
+            <em>Text:</em> ${note.note}
+          </div>`
+              )
+              .join("")
+          : `<p>No notes found.</p>`;
+
+      await MySwal.fire({
+        title: "Your notes:",
+        html: `
+        <div style="
+          font-size: 0.8rem; 
+          color: #fff;
+          padding: 1rem; 
+          text-align: left;
+          max-height: 300px;
+          overflow-y: auto;
+        ">
+          ${notesHtml}
+        </div>
+      `,
+        confirmButtonText: "Close",
+        draggable: true,
+        customClass: {
+          popup: "my-swal-popup",
+          content: "my-swal-content",
+          confirmButton: "my-swal-confirm",
+        },
+      });
+    } catch (error) {
+      console.error("Error fetching notes:", error);
+      await MySwal.fire("Error", "Failed to load notes.", "error");
+    }
+  };
+
+  const addNote = async (book) => {
+    const { value: formValues } = await MySwal.fire({
+      title: "Enter your note",
+      html:
+        `<input id="swal-input-page" class="swal2-input" placeholder="Page number">` +
+        `<input id="swal-input-note" class="swal2-input" placeholder="Note">`,
+      focusConfirm: false,
+      draggable: true,
+      showCancelButton: true,
+      confirmButtonText: "Save",
+      showLoaderOnConfirm: true,
+      preConfirm: () => {
+        const page = document.getElementById("swal-input-page").value;
+        const note = document.getElementById("swal-input-note").value;
+        if (!page || !note) {
+          MySwal.showValidationMessage("Both fields are required");
+          return false;
+        }
+        return { page, note };
+      },
+      allowOutsideClick: () => !Swal.isLoading(),
+      customClass: {
+        popup: "my-swal-popup",
+        content: "my-swal-content",
+        confirmButton: "my-swal-confirm",
+        cancelButton: "my-swal-cancel",
+      },
+    });
+
+    if (formValues) {
+      try {
+        const user = auth.currentUser;
+        if (!user) throw new Error("User not authenticated");
+        await addDoc(
+          collection(db, "users", user.uid, "library", book.id, "notes"),
+          {
+            page: Number(formValues.page),
+            note: formValues.note,
+            createdAt: new Date(),
+          }
+        );
+        MySwal.fire("Saved!", "Your note has been saved.", "success");
+      } catch (error) {
+        console.error("Error saving note:", error);
+        MySwal.fire("Error", "Failed to save the note.", "error");
+      }
+    }
+  };
+
+  const showComment = async (comment) => {
+    await MySwal.fire({
+      title: "Your comment:",
+      html: `
+      <div style="
+        font-size: 0.8rem; 
+        color: #333; 
+        padding: 1rem; 
+        color: #fff;
+        text-align: left;
+        max-height: 300px;
+        overflow-y: auto;
+      ">
+        ${comment}
+      </div>
+    `,
+      confirmButtonText: "Close",
+      draggable: true,
+      customClass: {
+        popup: "my-swal-popup",
+        content: "my-swal-content",
+        confirmButton: "my-swal-confirm",
+      },
+    });
   };
 
   const progressButtons = (book, maxProgress) => {
@@ -140,6 +297,7 @@ export default function BooksSlider({
       </div>
     `,
       input: "text",
+      draggable: true,
       inputPlaceholder: "Leave a comment...",
       inputAttributes: {
         autocapitalize: "off",
@@ -226,11 +384,11 @@ export default function BooksSlider({
         label.style.textAlign = "center";
         label.style.marginTop = "10px";
         label.style.color = "#fff";
-        label.innerText = `Pages: ${range.value}`;
+        label.innerText = `Pages: ${maxProgress}`;
         range.parentNode.appendChild(label);
 
         range.addEventListener("input", () => {
-          label.innerText = `Pages: ${range.value}`;
+          label.innerText = `Pages: ${maxProgress}`;
         });
       },
     }).then((result) => {
@@ -360,6 +518,7 @@ export default function BooksSlider({
         bookRating: rating,
         bookComment: comment,
       });
+      fetchAllBookMeta();
       console.log("Rating Set!");
     } catch (error) {
       console.error("Failed to rate the book");
@@ -437,6 +596,7 @@ export default function BooksSlider({
               library: libraryButtons(book),
               progress: progressButtons(book, maxProgress),
               rated: ratedButtons(book),
+              notes: notesButtons(book),
             };
             const buttons = typeMap[type];
 
@@ -464,14 +624,9 @@ export default function BooksSlider({
                       width: "100%",
                     }}
                   >
-                    <BookRoundButton
-                      size="small"
-                      type="plus"
-                      onClick={() => handlePlusClick(book)}
-                    />
-
                     <AdditionalBar
                       type={type}
+                      buttonFunc={() => handlePlusClick(book)}
                       progress={progress}
                       maxProgress={maxProgress}
                     />
@@ -486,19 +641,29 @@ export default function BooksSlider({
                       width: "100%",
                     }}
                   >
-                    <BookRoundButton
-                      size="small"
-                      type="plus"
-                      onClick={() => handlePlusClick(book)}
-                    />
-
                     <AdditionalBar
                       type={type}
+                      buttonFunc={() => showComment(bookComment)}
                       progress={progress}
                       maxProgress={maxProgress}
+                      rating={bookRating}
+                      comment={bookComment}
                     />
-                    <p>{bookRating}</p>
-                    <p>{bookComment}</p>
+                  </div>
+                ) : type == "notes" ? (
+                  <div
+                    style={{
+                      display: "flex",
+                      flexDirection: "row",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      width: "100%",
+                    }}
+                  >
+                    <AdditionalBar
+                      type={type}
+                      buttonFunc={() => showNotes(book)}
+                    />
                   </div>
                 ) : (
                   <></>
