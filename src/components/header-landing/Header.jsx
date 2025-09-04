@@ -1,6 +1,6 @@
 import "./Header.css";
 
-export default function Header({Signup, AuthMode}) {
+export default function Header({ Signup, AuthMode }) {
   return (
     <>
       <div className="header-container">
